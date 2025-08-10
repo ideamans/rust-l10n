@@ -39,7 +39,7 @@ impl L10n {
         let mut world = self.world.write().unwrap();
         world
             .entry(lang.to_string())
-            .or_insert_with(HashMap::new)
+            .or_default()
             .extend(lexicon);
     }
 

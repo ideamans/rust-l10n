@@ -36,7 +36,7 @@ mod auth {
 
 mod file_manager {
     use ctor::ctor;
-    use rust_l10n::{register_translations, t, f};
+    use rust_l10n::{f, register_translations, t};
 
     #[ctor]
     fn init() {
@@ -98,7 +98,7 @@ fn main() {
 
         // ファイル管理モジュールのテスト
         println!("  File: {}", file_manager::save_file("document.txt"));
-        
+
         match file_manager::open_file("secret.txt") {
             Ok(msg) => println!("  File: {}", msg),
             Err(msg) => println!("  File: {}", msg),

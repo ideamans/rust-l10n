@@ -1,5 +1,5 @@
 use ctor::ctor;
-use rust_l10n::{register_translations, t, f, force_language, reset_language, detect_language};
+use rust_l10n::{detect_language, f, force_language, register_translations, reset_language, t};
 
 // ctorで自動初期化される翻訳登録
 #[ctor]

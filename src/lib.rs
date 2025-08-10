@@ -46,14 +46,13 @@ impl L10n {
             return lang.clone();
         }
 
+        // テストモード: L10N_TEST_MODE が設定されていれば英語に固定
+        if self.env_provider.var("L10N_TEST_MODE").is_ok() {
+            return "en".to_string();
+        }
+
         // 環境変数から言語を検出
-        let env_vars = [
-            "L10N_TEST_MODE",
-            "LANGUAGE",
-            "LC_ALL",
-            "LC_MESSAGES",
-            "LANG",
-        ];
+        let env_vars = ["LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"];
 
         for var in &env_vars {
             if let Ok(value) = self.env_provider.var(var) {

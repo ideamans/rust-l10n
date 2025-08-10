@@ -137,8 +137,7 @@ mod file_manager {
 
 - `LANGUAGE`、`LC_ALL`、`LC_MESSAGES`、`LANG` - 標準ロケール変数
 - `L10N_DEFAULT_LANGUAGE` - デフォルト言語を設定（フォールバック）
-- `L10N_TEST_MODE` - テスト用に特定の言語を強制
-- `L10N_SKIP_DETECTION` - 自動検出を無効化
+- `L10N_TEST_MODE` - テスト時に英語に固定（一貫したテストのため）
 
 ## テスト
 

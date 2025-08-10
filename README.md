@@ -137,8 +137,7 @@ mod file_manager {
 
 - `LANGUAGE`, `LC_ALL`, `LC_MESSAGES`, `LANG` - Standard locale variables
 - `L10N_DEFAULT_LANGUAGE` - Set default language (fallback)
-- `L10N_TEST_MODE` - Force specific language for testing
-- `L10N_SKIP_DETECTION` - Disable automatic detection
+- `L10N_TEST_MODE` - Force English language for consistent testing
 
 ## Testing
 

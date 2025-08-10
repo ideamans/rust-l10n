@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Test on Linux
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+    
+    - name: Cache cargo registry
+      uses: actions/cache@v3
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+    
+    - name: Cache cargo index
+      uses: actions/cache@v3
+      with:
+        path: ~/.cargo/git
+        key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.toml') }}
+    
+    - name: Cache cargo build
+      uses: actions/cache@v3
+      with:
+        path: target
+        key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
+    
+    - name: Build
+      run: cargo build --verbose
+    
+    - name: Run tests
+      run: cargo test --verbose
+    
+    - name: Run tests with Japanese locale
+      run: LANGUAGE=ja cargo test --verbose
+    
+    - name: Run basic example
+      run: cargo run --example basic
+    
+    - name: Run basic example with Japanese locale
+      run: LANGUAGE=ja cargo run --example basic
+    
+    - name: Run modular example
+      run: cargo run --example modular
+    
+    - name: Check formatting
+      run: cargo fmt -- --check
+    
+    - name: Run clippy
+      run: cargo clippy -- -D warnings
+
+  test-multi-locale:
+    name: Test with different locales
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        locale: [en_US.UTF-8, ja_JP.UTF-8, es_ES.UTF-8]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+    
+    - name: Install locale
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y locales
+        sudo locale-gen ${{ matrix.locale }}
+    
+    - name: Run tests with locale
+      run: |
+        export LANG=${{ matrix.locale }}
+        export LC_ALL=${{ matrix.locale }}
+        cargo test --verbose
+    
+    - name: Run examples with locale
+      run: |
+        export LANG=${{ matrix.locale }}
+        export LC_ALL=${{ matrix.locale }}
+        cargo run --example basic
+        cargo run --example modular

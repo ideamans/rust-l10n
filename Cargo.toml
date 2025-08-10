@@ -1,0 +1,19 @@
+[package]
+name = "rust-l10n"
+version = "0.1.0"
+edition = "2021"
+authors = ["rust-l10n contributors"]
+description = "A lightweight internationalization library ported from go-l10n"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/ideamans/rust-l10n"
+keywords = ["i18n", "l10n", "internationalization", "localization", "translation"]
+categories = ["internationalization"]
+
+[dependencies]
+once_cell = "1.19"
+ctor = "0.2"
+
+[dev-dependencies]
+
+[features]
+default = []

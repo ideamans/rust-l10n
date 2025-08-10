@@ -37,10 +37,7 @@ impl L10n {
 
     fn register(&self, lang: &str, lexicon: LexiconMap) {
         let mut world = self.world.write().unwrap();
-        world
-            .entry(lang.to_string())
-            .or_default()
-            .extend(lexicon);
+        world.entry(lang.to_string()).or_default().extend(lexicon);
     }
 
     fn detect_language(&self) -> String {
